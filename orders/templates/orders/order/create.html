@@ -1,0 +1,28 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+    创建订单
+{% endblock %}
+
+{% block content %}
+    <h1>创建订单</h1>
+
+    <div class="order-info">
+        <ul>
+            {% for item in cart %}
+                <li>
+                {{ item.quantity }} x {{ item.produce.name }}
+                <span>￥{{ item.total_price }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+         <p>总价：￥{{ cart.get_total_price }}</p>
+    </div>
+
+    <form method="post" class="order-form">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="支付"></p>
+    </form>
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+    支付成功
+{% endblock %}
+
+
+{% block content %}
+    <h1>谢谢下单</h1>
+    <p>您的订单已经提交成功，我们将尽快安排发货！您的订单是: <strong>{{ order.id }}</strong></p>
+{% endblock %}
