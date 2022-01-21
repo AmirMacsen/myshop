@@ -137,9 +137,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CELERY_TASK_ALWAYS_EAGER = True
 
 # braintree
-BRAINTREE_MERCHANT_ID = "c56s2dp2wbrdyn2k"
-BRAINTREE_PUBLIC_KEY = "3mytv7psqxv5g9g2"
-BRAINTREE_PRIVATE_KEY = "c0ca3cabd0f66d550e70d1d163493001"
+BRAINTREE_MERCHANT_ID = "x"
+BRAINTREE_PUBLIC_KEY = "x"
+BRAINTREE_PRIVATE_KEY = "x"
 
 import braintree
 
@@ -149,3 +149,10 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PUBLIC_KEY,
     BRAINTREE_PRIVATE_KEY
 )
+
+
+# redis
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
+

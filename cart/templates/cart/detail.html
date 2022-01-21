@@ -72,6 +72,20 @@
         </tr>
     </tbody>
     </table>
+    {% if recommended_products %}
+     <div class="recommendations cart">
+        <h3>其他用户同时购买了：</h3>
+        {% for product in recommended_products %}
+            <div class="item">
+                <a href="{{ product.get_absolute_url }}">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <p><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></p>
+            </div>
+        {% endfor %}
+
+     </div>
+    {% endif %}
     <p>输入优惠券码：</p>
     <form action="{% url "coupons:apply" %}" method="post">
         {{ coupon_apply_form }}
@@ -82,4 +96,6 @@
         <a href="{% url "shop:product_list" %}" class="button light">继续购物</a>
         <a href="{% url "order:order_create" %}" class="button">购买</a>
     </p>
+
+
 {% endblock %}
