@@ -1,0 +1,77 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}
+  订单 {{ order.id }} {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+    <a href="{% url "admin:index" %}">首页</a> &rsaquo;
+    <a href="{% url "admin:orders_order_changelist" %}">订单列表</a>
+    &rsaquo;
+    <a href="{% url "admin:orders_order_change" order.id %}">订单 {{ order.id }}</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+<h1>订单编号： {{ order.id }}</h1>
+<ul class="object-tools">
+  <li>
+    <a href="#" onclick="window.print();">打印</a>
+  </li>
+</ul>
+<table>
+  <tr>
+    <th>创建时间</th>
+    <td>{{ order.created }}</td>
+  </tr>
+  <tr>
+    <th>客户名称</th>
+    <td>{{ order.username }}</td>
+  </tr>
+  <tr>
+    <th>E-mail</th>
+    <td><a href="mailto:{{ order.email }}">{{ order.email }}</a></td>
+  </tr>
+  <tr>
+    <th>地址</th>
+    <td>{{ order.address }}, {{ order.postal_code }} {{ order.city }}</td>
+  </tr>
+  <tr>
+    <th>金额</th>
+    <td>${{ order.get_total_cost }}</td>
+  </tr>
+  <tr>
+    <th>状态</th>
+    <td>{% if order.paid %}已支付{% else %}待支付{% endif %}</td>
+  </tr>
+</table>
+
+<div class="module">
+  <h2>商品</h2>
+  <table style="width:100%">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>总价</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+        <tr class="row{% cycle "1" "2" %}">
+          <td>{{ item.product.name }}</td>
+          <td class="num">￥{{ item.price }}</td>
+          <td class="num">{{ item.quantity }}</td>
+          <td class="num">￥{{ item.get_cost }}</td>
+        </tr>
+      {% endfor %}
+      <tr class="total">
+        <td colspan="3">订单总额</td>
+        <td class="num">￥{{ order.get_total_cost }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

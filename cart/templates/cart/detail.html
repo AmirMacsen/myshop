@@ -48,13 +48,36 @@
                 </tr>
             {% endwith %}
         {% endfor %}
-        <tr class="total">
+        {% if cart.coupon %}
+            <tr class="subtotal">
+                <td>优惠</td>
+                <td colspan="4"></td>
+                <td class="num">￥{{ cart.get_total_price }}</td>
+            </tr>
+            <tr>
+                <td>
+                    优惠券 “{{ cart.coupon.code }}” 减少 ({{ cart.coupon.discount }}%)
+                </td>
+                <td colspan="4"></td>
+                <td class="num neg">
+                    - ￥{{ cart.get_discount|floatformat:"2"  }}
+                </td>
+            </tr>
+        {% endif %}
+
+      <tr class="total">
             <td>总价</td>
             <td colspan="4"></td>
-            <td class="num">￥{{ cart.get_total_price }}</td>
+            <td class="num">￥{{ cart.get_total_price_after_discount|floatformat:"2" }}</td>
         </tr>
     </tbody>
     </table>
+    <p>输入优惠券码：</p>
+    <form action="{% url "coupons:apply" %}" method="post">
+        {{ coupon_apply_form }}
+        <input type="submit" value="提交">
+        {% csrf_token %}
+    </form>
     <p class="text-right">
         <a href="{% url "shop:product_list" %}" class="button light">继续购物</a>
         <a href="{% url "order:order_create" %}" class="button">购买</a>

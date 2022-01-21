@@ -15,8 +15,15 @@
                 <span>￥{{ item.total_price }}</span>
                 </li>
             {% endfor %}
+            <!-- 以下内容进行修改 -->
+            {% if cart.coupon %}
+                <li>
+                优惠券 “{{ cart.coupon.code }}” 减少 ({{ cart.coupon.discount }}%)
+                <span class="neg">- ￥{{ cart.get_discount|floatformat:"2" }}</span>
+                </li>
+            {% endif %}
         </ul>
-         <p>总价：￥{{ cart.get_total_price }}</p>
+         <p>总价：￥{{ cart.get_total_price_after_discount|floatformat:"2" }}</p>
     </div>
 
     <form method="post" class="order-form">

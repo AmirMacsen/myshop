@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>My Shop</h1>
+    <p>
+        发票编号 {{ order.id }}
+        <span class="secondary">
+            {{ order.created|date:"Y/M/d" }}
+        </span>
+    </p>
+    <h3>收票人</h3>
+    <p>
+        {{ order.username }}<br>
+        {{ order.email }}<br>
+        {{ order.address }}<br>
+        {{ order.postal_code }}, {{ order.city }}
+    </p>
+
+    <h3>所购商品</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>金额</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+                <tr class="row{% cycle "1" "2" %}">
+                    <td>{{ item.product.name }}</td>
+                    <td class="num">￥{{ item.price }}</td>
+                    <td class="num">￥{{ item.quantity }}</td>
+                    <td class="num">￥{{ item.get_cost }}</td>
+                </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">总价</td>
+                <td class="num">￥{{ order.get_total_cost }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="{% if order.pid %}已支付{% else %}待支付{% endif %}">
+    {% if order.pid %}已支付{% else %}待支付{% endif %}
+    </span>
+</body>
+</html>
